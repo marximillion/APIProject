@@ -1,7 +1,6 @@
 /**
  * Imports
  */
-
 import { Component, ReactNode } from "react";
 import { Text } from "react-native";
 
