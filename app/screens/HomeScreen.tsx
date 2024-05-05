@@ -61,7 +61,7 @@ export default class HomeScreen extends Component<Props, State> {
 
       // Determine if returned response is an error or not
       if (searchResponse instanceof Error) {
-        console.log('Home::ERROR::searchMovies', searchResponse);
+        console.log('Home::ERROR::searchMovies::', searchResponse);
         throw searchResponse;
       } else {
         console.log('searchResponse:', searchResponse);

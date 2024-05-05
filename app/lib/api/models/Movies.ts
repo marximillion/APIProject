@@ -50,8 +50,8 @@ export default class Movies {
     populateObject(result, 'response', json.Response); // Response changes to response
     
     if (json.Search) {
-      // Search changes to searchResults
       // @ts-ignore
+      // Search changes to searchResults
       result.searchResults = SearchResults.createArrayFromJSON(json.Search);
     }
     return result;

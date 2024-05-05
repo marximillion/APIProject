@@ -34,10 +34,11 @@ export default class MovieAgent {
       const jsonResponse: APIPayload = await response.json();
 
       // 4: Check for OK Response, retrieve message if call failed and throw error to catch
-      if (!response.ok) {
+      if (jsonResponse.Response === 'False') {
         throw Error.createFromJSON(jsonResponse);
       }
 
+      console.log('MovieAgent::searchMovie::jsonResponse', jsonResponse);
       return Movies.createFromJSON(jsonResponse);
     } catch (error: any) {
       return error;
