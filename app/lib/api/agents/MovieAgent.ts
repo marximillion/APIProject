@@ -19,12 +19,12 @@ export default class MovieAgent {
   /**
    * Make call for movie API
    */
-  public searchMovies = async () => {
+  public searchMovies = async (movieSearch: string) => {
     console.log('MovieAgent::searchMovies');
 
     try {
       // 1: Construct the URL
-      const url = `${MOVIE_URL}?s=game&apikey=${MOVIE_API_KEY}`;
+      const url = `${MOVIE_URL}?s=${movieSearch}&apikey=${MOVIE_API_KEY}`;
       console.log(url);
 
       // 2: Fetch the API
