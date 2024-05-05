@@ -3,7 +3,7 @@
  */
 
 import { Component, ReactNode } from "react";
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import MovieAgent from "../lib/api/agents/MovieAgent";
 import Error from "../lib/api/models/Error";
 
@@ -17,6 +17,7 @@ interface Props {}
  */
 interface State {
   movie: string;
+  busy: boolean;
 }
 
 /**
@@ -32,6 +33,7 @@ export default class HomeScreen extends Component<Props, State> {
     super(props);
     this.state = {
       movie: '',
+      busy: false,
     };
   }// End of constructor()
 
@@ -57,21 +59,36 @@ export default class HomeScreen extends Component<Props, State> {
    * Action: Press
    */
   private searchMovies = async () => {
-    // Set up of agent
+    // 1: Retrieve variables from state
+    const { movie } = this.state;
+
+    // 1.1 Activate busy state
+    this.setState({
+      busy: true,
+    });
+
+    // 2: Set up of agent
     const movieAgent = new MovieAgent();
     try {
-      // Attempt retrieval of movies
+      // 3: Attempt retrieval of movies
       const searchResponse = await movieAgent.searchMovies();
 
-      // Determine if returned response is an error or not
+      // 3.1: Determine if returned response is an error or not
       if (searchResponse instanceof Error) {
+        // Pass the error from the searchResponse through to catch
         console.log('Home::ERROR::searchMovies::', searchResponse);
         throw searchResponse;
       } else {
         console.log('searchResponse:', searchResponse);
       }
     } catch (error: any) {
+      // Display an error message in a native Alert
       Alert.alert('Error', `response: ${error.response}\nmessage: ${error.message}`);
+    } finally {
+      // 4: Disable busy state when try and catch is complete
+      this.setState({
+        busy: false
+      })
     }
   }// End of searchMovies
 
@@ -84,7 +101,7 @@ export default class HomeScreen extends Component<Props, State> {
    */
   public render(): ReactNode {
     console.log('Home::Render')
-    const { movie } = this.state;
+    const { movie, busy } = this.state;
     return (
       <>
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -113,7 +130,10 @@ export default class HomeScreen extends Component<Props, State> {
               style={styles.button}
               onPress={this.searchMovies}
             >
-              <Text style={styles.buttonText}>{'SEARCH'}</Text>
+              {busy
+                ? <ActivityIndicator animating={busy} />
+                : <Text style={styles.buttonText}>{'SEARCH'}</Text>
+              }
             </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
