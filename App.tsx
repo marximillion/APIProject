@@ -2,7 +2,8 @@
  * Imports
  */
 import { Component, ReactNode } from "react";
-import { Text } from "react-native";
+import { StatusBar, Text } from "react-native";
+import NavigableAppContainer from "./app/navigation/NavigableAppContainer";
 
 /**
  * Props
@@ -50,8 +51,15 @@ export default class App extends Component<Props, State> {
    * Main Render
    */
   public render(): ReactNode {
+    console.log('App::Render')
     return (
-      <Text>{'APP'}</Text>
+      <>
+        <StatusBar
+          barStyle={'dark-content'}
+          backgroundColor={'gray'}
+        />
+        <NavigableAppContainer/>
+      </>
     );
   }// End of render()
 }// End of class
