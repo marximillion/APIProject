@@ -46,7 +46,14 @@ export default class Movies {
    */
   public static createFromJSON(json: APIPayload): Movies {
     const result = new Movies();
-    // Search becomes searchResults
+    populateObject(result, 'totalResults', json.totalResults);
+    populateObject(result, 'response', json.Response); // Response changes to response
+    
+    if (json.Search) {
+      // Search changes to searchResults
+      // @ts-ignore
+      result.searchResults = SearchResults.createArrayFromJSON(json.Search);
+    }
     return result;
   }// Ed of createFromJSON()
 
