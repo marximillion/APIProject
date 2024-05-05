@@ -1,7 +1,6 @@
 /**
  * Imports
  */
-
 import {APIPayload} from '../../APIPayload';
 import populateObject from '../../common/Utility';
 
