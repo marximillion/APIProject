@@ -55,7 +55,6 @@ export default class Movies {
       result.searchResults = SearchResults.createArrayFromJSON(json.Search);
     }
     return result;
-  }// Ed of createFromJSON()
-
+  }// End of createFromJSON()
 }// End of class
 // End of file
