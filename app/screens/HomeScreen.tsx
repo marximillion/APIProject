@@ -3,7 +3,7 @@
  */
 
 import { Component, ReactNode } from "react";
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import MovieAgent from "../lib/api/agents/MovieAgent";
 import Error from "../lib/api/models/Error";
 
@@ -15,7 +15,9 @@ interface Props {}
 
  * State
  */
-interface State {}
+interface State {
+  movie: string;
+}
 
 /**
  * Root render of the application
@@ -28,7 +30,9 @@ export default class HomeScreen extends Component<Props, State> {
    */
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = {
+      movie: '',
+    };
   }// End of constructor()
 
   /**
@@ -80,6 +84,7 @@ export default class HomeScreen extends Component<Props, State> {
    */
   public render(): ReactNode {
     console.log('Home::Render')
+    const { movie } = this.state;
     return (
       <>
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -87,9 +92,23 @@ export default class HomeScreen extends Component<Props, State> {
             style={styles.scrollContainer}
             contentContainerStyle={styles.scrollContentContainer}
           >
+            {/* Title */}
             <Text style={styles.contentTitleText}>
               {'HOME SCREEN'}
             </Text>
+
+            {/* Input for search query */}
+            <TextInput
+              style={styles.inputBox}
+              onChangeText={(query: string) =>
+                this.setState({
+                  movie: query
+                })
+              }
+              value={movie}
+              placeholder={'Search for a movie...'}
+              placeholderTextColor={'black'}
+            />
             <TouchableOpacity
               style={styles.button}
               onPress={this.searchMovies}
@@ -138,6 +157,16 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
-  }
+  },
+  inputBox: {
+    backgroundColor: 'rgba(145, 171, 15, 0.4)',
+    borderColor: '#ccc',
+    borderRadius: 10,
+    borderWidth: 1,
+    fontSize: 16,
+    height: 60,
+    width: '50%',
+    paddingHorizontal: 15,
+  },
 })// End of styles
 // End of file
