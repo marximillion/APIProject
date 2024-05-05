@@ -7,6 +7,7 @@ import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, T
 import MovieAgent from "../lib/api/agents/MovieAgent";
 import Error from "../lib/api/models/Error";
 import Movies from "../lib/api/models/Movies";
+import SearchResults from "../lib/api/models/SearchResults";
 
 /**
  * Props
@@ -108,6 +109,7 @@ export default class HomeScreen extends Component<Props, State> {
   public render(): ReactNode {
     console.log('Home::Render')
     const { movieSearch, busy, movies } = this.state;
+    const searchResults = movies?.searchResults;
     return (
       <>
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -144,10 +146,19 @@ export default class HomeScreen extends Component<Props, State> {
             {
               movies &&
               <View style={styles.searchContainer}>
-                  <Text style={styles.buttonText}>{`Search results for: ${movieSearch}`}</Text>
-                <Text style={styles.buttonText}>{`# of Results: ${movies.totalResults}`}</Text>
+                <Text style={styles.buttonText}>{`Search results for: ${movieSearch}`}</Text>
+                  <Text style={styles.buttonText}>{`# of Results: ${movies.totalResults}`}</Text>
+    
+                  {
+                    searchResults?.map((searchResults: SearchResults, key: number) => (
+                      <View key={key}>
+                        <Text>{`Title: ${searchResults.title} [${searchResults.type}]`}</Text>
+                      </View>
+                    )) 
+                  }
               </View>
             }
+            {/* TODO: Load More button? paginate through the available data */}
           </ScrollView>
         </SafeAreaView>
       </>
