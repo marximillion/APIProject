@@ -62,6 +62,11 @@ export default class HomeScreen extends Component<Props, State> {
             <Text style={styles.contentTitleText}>
               {'HOME SCREEN'}
             </Text>
+            <TouchableOpacity
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>{'SEARCH'}</Text>
+            </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
       </>
@@ -88,5 +93,22 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
   },
+  button: {
+    alignItems: 'center',
+    borderColor: 'green',
+    borderRadius: 15,
+    borderWidth: 1,
+    elevation: 0.2,
+    height: 60,
+    backgroundColor: 'rgba(145, 171, 15, 0.9)', // Pinkish color with 60% transparency
+    justifyContent: 'center',
+    marginTop: 10,
+    width: '30%',
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+  }
 })// End of styles
 // End of file
