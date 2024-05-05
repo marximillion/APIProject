@@ -15,7 +15,7 @@ interface Props {}
 interface State {}
 
 /**
- * Root render of the app
+ * Root render of the application
  */
 export default class App extends Component<Props, State> {
   /**
