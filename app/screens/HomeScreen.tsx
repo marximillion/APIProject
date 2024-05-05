@@ -3,7 +3,9 @@
  */
 
 import { Component, ReactNode } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import MovieAgent from "../lib/api/agents/MovieAgent";
+import Error from "../lib/api/models/Error";
 
 /**
  * Props
@@ -44,6 +46,32 @@ export default class HomeScreen extends Component<Props, State> {
   }// End of componentWillUnmount()
   
   /**
+   **********ACTION METHODS********** 
+   */
+
+  /**
+   * Action: Press
+   */
+  private searchMovies = async () => {
+    // Set up of agent
+    const movieAgent = new MovieAgent();
+    try {
+      // Attempt retrieval of movies
+      const searchResponse = await movieAgent.searchMovies();
+
+      // Determine if returned response is an error or not
+      if (searchResponse instanceof Error) {
+        console.log('Home::ERROR::searchMovies', searchResponse);
+        throw searchResponse;
+      } else {
+        console.log('searchResponse:', searchResponse);
+      }
+    } catch (error: any) {
+      Alert.alert('Error', `response: ${error.response}\nmessage: ${error.message}`);
+    }
+  }// End of searchMovies
+
+  /**
    **********RENDER METHODS********** 
    */
 
@@ -64,6 +92,7 @@ export default class HomeScreen extends Component<Props, State> {
             </Text>
             <TouchableOpacity
               style={styles.button}
+              onPress={this.searchMovies}
             >
               <Text style={styles.buttonText}>{'SEARCH'}</Text>
             </TouchableOpacity>
