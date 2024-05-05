@@ -22,8 +22,8 @@ export default class Error {
    */
   public static createFromJSON(json: APIPayload): Error {
     const result = new Error();
-    populateObject(result, 'response', json.Response);
-    populateObject(result, 'message', json.Error);
+    populateObject(result, 'response', json.Response); // Response changes to response
+    populateObject(result, 'message', json.Error); // Error changes to message
     return result;
   }// Ed of createFromJSON()
 }// End of class
