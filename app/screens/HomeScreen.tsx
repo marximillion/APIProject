@@ -3,9 +3,10 @@
  */
 
 import { Component, ReactNode } from "react";
-import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import MovieAgent from "../lib/api/agents/MovieAgent";
 import Error from "../lib/api/models/Error";
+import Movies from "../lib/api/models/Movies";
 
 /**
  * Props
@@ -16,8 +17,9 @@ interface Props {}
  * State
  */
 interface State {
-  movie: string;
+  movieSearch: string;
   busy: boolean;
+  movies: Movies | null;
 }
 
 /**
@@ -32,8 +34,9 @@ export default class HomeScreen extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      movie: '',
+      movieSearch: '',
       busy: false,
+      movies: null,
     };
   }// End of constructor()
 
@@ -60,7 +63,7 @@ export default class HomeScreen extends Component<Props, State> {
    */
   private searchMovies = async () => {
     // 1: Retrieve variables from state
-    const { movie } = this.state;
+    const { movieSearch } = this.state;
 
     // 1.1 Activate busy state
     this.setState({
@@ -71,7 +74,7 @@ export default class HomeScreen extends Component<Props, State> {
     const movieAgent = new MovieAgent();
     try {
       // 3: Attempt retrieval of movies
-      const searchResponse = await movieAgent.searchMovies();
+      const searchResponse = await movieAgent.searchMovies(movieSearch);
 
       // 3.1: Determine if returned response is an error or not
       if (searchResponse instanceof Error) {
@@ -79,6 +82,9 @@ export default class HomeScreen extends Component<Props, State> {
         console.log('Home::ERROR::searchMovies::', searchResponse);
         throw searchResponse;
       } else {
+        this.setState({
+          movies: searchResponse
+        })
         console.log('searchResponse:', searchResponse);
       }
     } catch (error: any) {
@@ -101,7 +107,7 @@ export default class HomeScreen extends Component<Props, State> {
    */
   public render(): ReactNode {
     console.log('Home::Render')
-    const { movie, busy } = this.state;
+    const { movieSearch, busy, movies } = this.state;
     return (
       <>
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -119,10 +125,10 @@ export default class HomeScreen extends Component<Props, State> {
               style={styles.inputBox}
               onChangeText={(query: string) =>
                 this.setState({
-                  movie: query
+                  movieSearch: query
                 })
               }
-              value={movie}
+              value={movieSearch}
               placeholder={'Search for a movie...'}
               placeholderTextColor={'black'}
             />
@@ -135,6 +141,13 @@ export default class HomeScreen extends Component<Props, State> {
                 : <Text style={styles.buttonText}>{'SEARCH'}</Text>
               }
             </TouchableOpacity>
+            {
+              movies &&
+              <View style={styles.searchContainer}>
+                  <Text style={styles.buttonText}>{`Search results for: ${movieSearch}`}</Text>
+                <Text style={styles.buttonText}>{`# of Results: ${movies.totalResults}`}</Text>
+              </View>
+            }
           </ScrollView>
         </SafeAreaView>
       </>
@@ -188,5 +201,8 @@ const styles = StyleSheet.create({
     width: '50%',
     paddingHorizontal: 15,
   },
+  searchContainer: {
+
+  }
 })// End of styles
 // End of file
