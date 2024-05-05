@@ -3,7 +3,7 @@
  */
 
 import { Component, ReactNode } from "react";
-import { Text } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 /**
  * Props
@@ -53,8 +53,40 @@ export default class HomeScreen extends Component<Props, State> {
   public render(): ReactNode {
     console.log('Home::Render')
     return (
-      <Text>{'HOME'}</Text>
+      <>
+        <SafeAreaView style={styles.safeAreaContainer}>
+          <ScrollView
+            style={styles.scrollContainer}
+            contentContainerStyle={styles.scrollContentContainer}
+          >
+            <Text style={styles.contentTitleText}>
+              {'HOME SCREEN'}
+            </Text>
+          </ScrollView>
+        </SafeAreaView>
+      </>
     );
   }// End of render()
 }// End of class
+
+/**
+ * Styles
+ */
+const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+  },
+  scrollContainer: {
+    backgroundColor: '#c0c991',
+    flex: 1,
+  },
+  scrollContentContainer: {
+    alignItems: 'center',
+  },
+  contentTitleText: {
+    color: 'black',
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+})// End of styles
 // End of file
