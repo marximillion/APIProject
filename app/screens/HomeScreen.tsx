@@ -21,6 +21,7 @@ interface State {
   movieSearch: string;
   busy: boolean;
   movies: Movies | null;
+  pageCounter: number;
 }
 
 /**
@@ -38,6 +39,7 @@ export default class HomeScreen extends Component<Props, State> {
       movieSearch: '',
       busy: false,
       movies: null,
+      pageCounter: 1
     };
   }// End of constructor()
 
@@ -100,6 +102,17 @@ export default class HomeScreen extends Component<Props, State> {
   }// End of searchMovies
 
   /**
+   * Action: Press
+   */
+  private loadMoreMovies = () => {
+    const { pageCounter } = this.state;
+    const pageCounterUpdated = pageCounter + 1;
+    this.setState({
+      pageCounter: pageCounterUpdated
+    })
+  }
+
+  /**
    **********RENDER METHODS********** 
    */
 
@@ -108,8 +121,10 @@ export default class HomeScreen extends Component<Props, State> {
    */
   public render(): ReactNode {
     console.log('Home::Render')
-    const { movieSearch, busy, movies } = this.state;
+    const { movieSearch, busy, movies, pageCounter } = this.state;
     const searchResults = movies?.searchResults;
+    const totalResults = movies?.totalResults;
+    const numberOfPages = totalResults !== undefined ? Math.ceil(parseInt(totalResults) / 10) : 0;
     return (
       <>
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -143,12 +158,13 @@ export default class HomeScreen extends Component<Props, State> {
                 : <Text style={styles.buttonText}>{'SEARCH'}</Text>
               }
             </TouchableOpacity>
+
+            {/* Search Results Display */}
             {
               movies &&
               <View style={styles.searchContainer}>
                 <Text style={styles.buttonText}>{`Search results for: ${movieSearch}`}</Text>
-                  <Text style={styles.buttonText}>{`# of Results: ${movies.totalResults}`}</Text>
-    
+                <Text style={styles.buttonText}>{`# of Results: ${movies.totalResults}`}</Text>
                   {
                     searchResults?.map((searchResults: SearchResults, key: number) => (
                       <View style={styles.resultsContainer} key={key}>
@@ -164,9 +180,10 @@ export default class HomeScreen extends Component<Props, State> {
                     )) 
                   }
                 {/* TODO: Logic for adding more content */}
+                <Text style={styles.buttonText}>{`${pageCounter}/${numberOfPages}`}}</Text>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={this.searchMovies}
+                  onPress={this.loadMoreMovies}
                 >
                   {busy
                     ? <ActivityIndicator animating={busy} />
