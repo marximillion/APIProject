@@ -3,7 +3,7 @@
  */
 
 import { Component, ReactNode } from "react";
-import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import MovieAgent from "../lib/api/agents/MovieAgent";
 import Error from "../lib/api/models/Error";
 import Movies from "../lib/api/models/Movies";
@@ -151,14 +151,30 @@ export default class HomeScreen extends Component<Props, State> {
     
                   {
                     searchResults?.map((searchResults: SearchResults, key: number) => (
-                      <View key={key}>
-                        <Text>{`Title: ${searchResults.title} [${searchResults.type}]`}</Text>
+                      <View style={styles.resultsContainer} key={key}>
+                        <Text style={styles.resultsTitle}>
+                          {`${searchResults.title} [${searchResults.type}]`}
+                        </Text>
+                        <Image
+                          style={styles.posterImage}
+                          source={{ uri: searchResults.posterURL !== 'N/A' ? searchResults.posterURL : 'https://upload.wikimedia.org/wikipedia/commons/e/ea/No_image_preview.png'}}
+                          resizeMode="contain"
+                        />
                       </View>
                     )) 
                   }
+                {/* TODO: Logic for adding more content */}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.searchMovies}
+                >
+                  {busy
+                    ? <ActivityIndicator animating={busy} />
+                    : <Text style={styles.buttonText}>{'Load More'}</Text>
+                  }
+                </TouchableOpacity>
               </View>
             }
-            {/* TODO: Load More button? paginate through the available data */}
           </ScrollView>
         </SafeAreaView>
       </>
@@ -179,6 +195,7 @@ const styles = StyleSheet.create({
   },
   scrollContentContainer: {
     alignItems: 'center',
+    paddingVertical: 20,
   },
   contentTitleText: {
     color: 'black',
@@ -213,7 +230,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   searchContainer: {
-
-  }
+    alignItems: 'center',
+  },
+  resultsContainer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    borderColor: 'red',
+    borderWidth: 2,
+  },
+  resultsTitle: {
+    color: 'red',
+    fontSize: 20,
+  },
+  posterImage: {
+    width: 500,
+    height: 500,
+  },
 })// End of styles
 // End of file
