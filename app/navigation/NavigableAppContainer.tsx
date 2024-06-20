@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StackParamList } from "./StackParamList";
 import HomeScreen from "../screens/HomeScreen";
+import MovieScreen from "../screens/MovieScreen";
 
 /**
  * Initialization
@@ -27,6 +28,10 @@ export default function NavigableAppContainer() {
         <Stack.Screen
           name={'Home'}
           component={HomeScreen}
+        />
+        <Stack.Screen
+          name={'Movie'}
+          component={MovieScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

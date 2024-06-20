@@ -19,12 +19,12 @@ export default class MovieAgent {
   /**
    * Make call for movie API
    */
-  public searchMovies = async (movieSearch: string) => {
+  public searchMovies = async (movieSearch: string, pageNumber?: string) => {
     console.log('MovieAgent::searchMovies');
 
     try {
       // 1: Construct the URL
-      const url = `${MOVIE_URL}?s=${movieSearch}&apikey=${MOVIE_API_KEY}`;
+      const url = `${MOVIE_URL}?s=${movieSearch}&page=${pageNumber}&apikey=${MOVIE_API_KEY}`;
       console.log(url);
 
       // 2: Fetch the API
@@ -38,7 +38,8 @@ export default class MovieAgent {
         throw Error.createFromJSON(jsonResponse);
       }
 
-      console.log('MovieAgent::searchMovie::jsonResponse', jsonResponse);
+      console.log('MovieAgent::searchMovie::jsonResponse');
+      // console.log('MovieAgent::searchMovie::jsonResponse', jsonResponse);
       return Movies.createFromJSON(jsonResponse);
     } catch (error: any) {
       return error;
