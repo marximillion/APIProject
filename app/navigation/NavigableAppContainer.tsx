@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StackParamList } from "./StackParamList";
 import HomeScreen from "../screens/HomeScreen";
 import MovieScreen from "../screens/MovieScreen";
+import GasScreen from "../screens/GasScreen";
 
 /**
  * Initialization
@@ -32,6 +33,10 @@ export default function NavigableAppContainer() {
         <Stack.Screen
           name={'Movie'}
           component={MovieScreen}
+        />
+        <Stack.Screen
+          name={'Gas'}
+          component={GasScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

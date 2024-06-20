@@ -58,24 +58,26 @@ export default class MovieScreen extends Component<Props, State> {
    * On Mount
    */
   public componentDidMount(): void {
-    console.log('Home::OnMount');
+    console.log('Movie::OnMount');
   } // End of componentDidMount()
 
   /**
    * Un Mount
    */
   public componentWillUnmount(): void {
-    console.log('Home::UnMount');
+    console.log('Movie::UnMount');
   } // End of componentWillUnmount()
 
-  /**
-   **********ACTION METHODS**********
-   */
+  /******************************************************************************/
+  /****************************** ACTION METHODS ********************************/
+  /******************************************************************************/
 
   /**
    * Action: Press
    */
   private searchMovies = async () => {
+    console.log('MovieScreen::searchMovies');
+
     // 1: Retrieve variables from state
     const {movieSearch, pageCounter} = this.state;
     let pageCounterUpdated;
@@ -123,7 +125,7 @@ export default class MovieScreen extends Component<Props, State> {
    * Action: Press
    */
   private loadMoreMovies = async () => {
-    console.log('loadMoreMovies::Firing');
+    console.log('MovieScreen::loadMoreMovies');
     const {movieSearch, pageCounter} = this.state;
     // let pageCounterUpdated = pageCounter + 1;
     this.setState({
@@ -168,9 +170,9 @@ export default class MovieScreen extends Component<Props, State> {
     }
   }; // End of loadMoreMovies()
 
-  /**
-   **********RENDER METHODS**********
-   */
+  /******************************************************************************/
+  /****************************** RENDER METHODS ********************************/
+  /******************************************************************************/
 
   /**
    * Render: Home

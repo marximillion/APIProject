@@ -1,55 +1,61 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {Component, ReactNode} from 'react';
-import {Appearance, Button, Dimensions, Image, ImageBackground, KeyboardAvoidingView, StatusBar, StyleSheet, Text} from 'react-native';
-import { StackParamList } from '../navigation/StackParamList';
-import { Route, RouteProp } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  Appearance,
+  Button,
+  Dimensions,
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  StatusBar,
+  StyleSheet,
+  Text,
+} from 'react-native';
+import {StackParamList} from '../navigation/StackParamList';
+import {Route, RouteProp} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 /**
  * Props
  */
 interface Props {
-  navigation: StackNavigationProp<StackParamList, 'Home'>
-  route: RouteProp<StackParamList, 'Home'>
+  navigation: StackNavigationProp<StackParamList, 'Home'>;
+  route: RouteProp<StackParamList, 'Home'>;
 }
 
 export interface HomeProps {
-  colorScheme: string | null | undefined
+  colorScheme: string | null | undefined;
 }
 /**
  * State
  */
-interface State {
-}
+interface State {}
 
 export default class HomeScreen extends Component<Props, State> {
   /**
    * Constructor
-   * 
+   *
    * @param props
    */
   constructor(props: Props) {
     super(props);
-    // console.log('HomeScreen::Constructor::Firing');
 
-    this.state = {
-    };
-    
+    this.state = {};
   } // End of contructor()
 
   /**
    * on Mount
    */
   public componentDidMount(): void {
-    console.log('HomeScreen::OnMount::Firing');
+    console.log('HomeScreen::OnMount');
   } // End of componentDidMount()
 
   /**
    * on UnMount
    */
   public componentWillUnmount(): void {
-    console.log('HomeScreen::UnMount::Firing');
+    console.log('HomeScreen::UnMount');
   } // End of componentWillMount()
 
   /******************************************************************************/
@@ -62,28 +68,35 @@ export default class HomeScreen extends Component<Props, State> {
 
   /**
    * Render: HomeScreen
-   * 
+   *
    * @returns ReactNode
    */
   public render(): ReactNode {
-    console.log('HomeScreen::Render::Firing');
+    console.log('HomeScreen::Render');
     return (
       <>
         <ImageBackground
           source={require('../assets/backgroundImage.jpg')}
-          resizeMode='cover'
-          style={[styles.image, { opacity: 0.9 }]}
-        >
-        <StatusBar barStyle={"dark-content"}  translucent backgroundColor={"transparent"}></StatusBar>
-        <SafeAreaView style={styles.safeAreaContainer}>
+          resizeMode="cover"
+          style={[styles.image, {opacity: 0.9}]}>
+          <StatusBar
+            barStyle={'dark-content'}
+            translucent
+            backgroundColor={'transparent'}></StatusBar>
+          <SafeAreaView style={styles.safeAreaContainer}>
             <KeyboardAvoidingView style={styles.mainContainer}>
-            {/* TODO: convert onPress to have a navigation method */}
-            <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("Movie")}>
-                <Text style={styles.buttonText}>
-                  ENTER IF YOU DARE!!!
-                </Text>
+              {/* TODO: convert onPress to have a navigation method */}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.props.navigation.navigate('Movie')}>
+                <Text style={styles.buttonText}>{'Go to Movie Screen'}</Text>
               </TouchableOpacity>
-          </KeyboardAvoidingView>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.props.navigation.navigate('Gas')}>
+                <Text style={styles.buttonText}>{'Go to Gas Screen'}</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
           </SafeAreaView>
         </ImageBackground>
       </>
@@ -106,8 +119,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   button: {
     backgroundColor: 'rgba(255, 105, 180, 0.05)', // Pinkish color with 60% transparency
