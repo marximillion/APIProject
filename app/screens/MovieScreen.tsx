@@ -184,7 +184,7 @@ export default class MovieScreen extends Component<Props, State> {
     const totalResults = movies?.totalResults;
     const numberOfPages =
       totalResults !== undefined ? Math.ceil(parseInt(totalResults) / 10) : 0;
-    console.log(`pageCounter:${pageCounter}`)
+    console.log(`pageCounter:${pageCounter}`);
     return (
       <>
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 40,
     fontWeight: 'bold',
-    paddingTop: 20
+    paddingTop: 20,
   },
   button: {
     alignItems: 'center',
